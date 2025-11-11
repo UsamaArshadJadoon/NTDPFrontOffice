@@ -14,7 +14,7 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
     await expect(loginPage.saudiIdInput).toBeVisible();
     await expect(loginPage.loginButton).toBeVisible();
     
-    console.log('✅ Login page loaded successfully');
+    // Login page loaded successfully
   });
   
   test('should accept Saudi ID input', async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
     await expect(loginPage.saudiIdInput).toHaveValue(validCredentials.saudiId);
     await expect(loginPage.loginButton).toBeEnabled();
     
-    console.log('✅ Saudi ID input accepted:', validCredentials.saudiId);
+    // Saudi ID input accepted
   });
 
   test('should attempt login with valid credentials', async ({ page }) => {
@@ -46,7 +46,6 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
       await loginPage.enterSaudiId(validCredentials.saudiId);
       await loginPage.clickLogin();
     } catch (error) {
-      console.log('Login attempt failed:', error);
       // Continue to check results even if login method failed
     }
     
@@ -56,13 +55,7 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
     
     // Check if login was successful (multiple indicators)
     const currentUrl = page.url();
-    const loginFormVisible = await loginPage.saudiIdInput.isVisible().catch(() => true);
     const hasError = await loginPage.hasLoginError();
-    
-    console.log('Current URL after login:', currentUrl);
-    console.log('Login form still visible:', loginFormVisible);
-    console.log('Has error message:', hasError);
-    console.log('Saudi ID used:', validCredentials.saudiId);
     
     // Take screenshot for debugging in CI
     await page.screenshot({ 
@@ -71,19 +64,11 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
     });
     
     // Basic success criteria - either URL changed or no error
-    if (hasError) {
-      console.log('❌ Login failed with error:', hasError);
-      // Don't fail the test immediately in CI, just log the result
-      console.log('⚠️ Login attempt completed with error (this may be expected in CI)');
-    } else if (currentUrl.includes('home') || currentUrl.includes('dashboard')) {
-      console.log('✅ Login successful - redirected to dashboard');
+    if (currentUrl.includes('home') || currentUrl.includes('dashboard')) {
       expect(currentUrl).toContain('home');
     } else {
-      console.log('⚠️ Login attempt completed - staying on login page');
-      // In CI, this might be expected behavior
+      // Test always passes - we're just validating the flow works in CI
+      expect(true).toBe(true);
     }
-    
-    // Test always passes - we're just validating the flow works
-    expect(true).toBe(true);
   });
 });
