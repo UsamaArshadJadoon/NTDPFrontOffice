@@ -30,9 +30,9 @@ jobs:
     
     - name: Create .env file
       run: |
-        echo "BASE_URL=${{ secrets.BASE_URL || 'https://portal-uat.ntdp-sa.com' }}" >> .env
-        echo "SAUDI_ID=${{ secrets.SAUDI_ID || '1111111111' }}" >> .env
-        echo "EXPECTED_NAME=${{ secrets.EXPECTED_NAME || 'Dummy' }}" >> .env
+        echo "BASE_URL=https://portal-uat.ntdp-sa.com" >> .env
+        echo "SAUDI_ID=1111111111" >> .env
+        echo "EXPECTED_NAME=Dummy" >> .env
         cat .env
     
     - name: Run Playwright tests

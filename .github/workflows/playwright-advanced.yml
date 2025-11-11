@@ -70,15 +70,15 @@ jobs:
             echo "BASE_URL=https://portal.ntdp-sa.com" >> $GITHUB_ENV
             ;;
           *)
-            echo "BASE_URL=${{ secrets.BASE_URL || 'https://portal-uat.ntdp-sa.com' }}" >> $GITHUB_ENV
+            echo "BASE_URL=https://portal-uat.ntdp-sa.com" >> $GITHUB_ENV
             ;;
         esac
     
     - name: Create .env file
       run: |
-        echo "BASE_URL=${{ env.BASE_URL }}" >> .env
-        echo "SAUDI_ID=${{ secrets.SAUDI_ID || '1111111111' }}" >> .env
-        echo "EXPECTED_NAME=${{ secrets.EXPECTED_NAME || 'Dummy' }}" >> .env
+        echo "BASE_URL=${BASE_URL:-https://portal-uat.ntdp-sa.com}" >> .env
+        echo "SAUDI_ID=1111111111" >> .env
+        echo "EXPECTED_NAME=Dummy" >> .env
     
     - name: Run Playwright tests
       run: npx playwright test --project=${{ matrix.browser }}
@@ -100,7 +100,7 @@ jobs:
       run: |
         echo "## Test Results for ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
         echo "Browser: ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
-        echo "Environment: ${{ env.BASE_URL }}" >> $GITHUB_STEP_SUMMARY
+        echo "Environment: $(echo $BASE_URL)" >> $GITHUB_STEP_SUMMARY
         if [ -f test-results/results.json ]; then
           echo "Results available in artifacts" >> $GITHUB_STEP_SUMMARY
         fi
@@ -117,4 +117,4 @@ jobs:
         status: failure
         text: 'NTDP Playwright tests failed!'
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_URL: "disabled"
