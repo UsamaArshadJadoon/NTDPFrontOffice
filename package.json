@@ -1,0 +1,28 @@
+{
+  "name": "ntdp-frontoffice-automation",
+  "version": "1.0.0",
+  "description": "Automated test suite for NTDP Front Office using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --project=chromium",
+    "test:all": "playwright test",
+    "test:headed": "playwright test --project=chromium --headed",
+    "test:debug": "playwright test --project=chromium --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:ci": "playwright test --reporter=junit,html",
+    "test:ci:chromium": "playwright test --project=chromium --reporter=junit,html",
+    "test:ci:firefox": "playwright test --project=firefox --reporter=junit,html",
+    "test:ci:webkit": "playwright test --project=webkit --reporter=junit,html",
+    "install:ci": "npx playwright install --with-deps"
+  },
+  "keywords": ["playwright", "automation", "testing"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "dotenv": "^16.3.1",
+    "typescript": "^5.3.3"
+  }
+}

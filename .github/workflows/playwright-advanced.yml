@@ -1,0 +1,127 @@
+name: Playwright Tests (Advanced)
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run tests daily at 6 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Manual trigger with inputs
+    inputs:
+      browser:
+        description: 'Browser to test'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - chromium
+          - firefox
+          - webkit
+      environment:
+        description: 'Environment to test'
+        required: false
+        default: 'uat'
+        type: choice
+        options:
+          - uat
+          - staging
+          - prod
+
+env:
+  # Global environment variables
+  NODE_VERSION: 18
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ${{ github.event.inputs.browser == 'all' && fromJSON('["chromium", "firefox", "webkit"]') || fromJSON(format('["{0}"]', github.event.inputs.browser)) }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Cache Playwright browsers
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    
+    - name: Set environment URL
+      run: |
+        case "${{ github.event.inputs.environment }}" in
+          "staging")
+            echo "BASE_URL=https://portal-staging.ntdp-sa.com" >> $GITHUB_ENV
+            ;;
+          "prod")
+            echo "BASE_URL=https://portal.ntdp-sa.com" >> $GITHUB_ENV
+            ;;
+          *)
+            echo "BASE_URL=${{ secrets.BASE_URL || 'https://portal-uat.ntdp-sa.com' }}" >> $GITHUB_ENV
+            ;;
+        esac
+    
+    - name: Create .env file
+      run: |
+        echo "BASE_URL=${{ env.BASE_URL }}" >> .env
+        echo "SAUDI_ID=${{ secrets.SAUDI_ID || '1111111111' }}" >> .env
+        echo "EXPECTED_NAME=${{ secrets.EXPECTED_NAME || 'Dummy' }}" >> .env
+    
+    - name: Run Playwright tests
+      run: npx playwright test --project=${{ matrix.browser }}
+      env:
+        CI: true
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ matrix.browser }}
+        path: |
+          test-results/
+          playwright-report/
+        retention-days: 30
+    
+    - name: Add test summary
+      if: always()
+      run: |
+        echo "## Test Results for ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
+        echo "Browser: ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
+        echo "Environment: ${{ env.BASE_URL }}" >> $GITHUB_STEP_SUMMARY
+        if [ -f test-results/results.json ]; then
+          echo "Results available in artifacts" >> $GITHUB_STEP_SUMMARY
+        fi
+
+  # Slack notification on failure
+  notify:
+    needs: test
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+    - name: Notify Slack on failure
+      uses: 8398a7/action-slack@v3
+      with:
+        status: failure
+        text: 'NTDP Playwright tests failed!'
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
