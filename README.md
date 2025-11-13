@@ -1,823 +1,338 @@
-# 🏢 NTDP Front Office Automation# 🏢 NTDP Front Office Automation
+# 🏢 NTDP Front Office Automation
 
+[![CI Status](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/workflows/NTDP%20Portal%20Tests/badge.svg)](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/actions)
+[![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-green)](https://owasp.org/Top10/)
+[![Testing](https://img.shields.io/badge/Testing-Playwright-blue)](https://playwright.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 
+> **Comprehensive automated test suite for NTDP Portal using Playwright with TypeScript, featuring advanced security testing and OWASP Top 10 compliance validation.**
 
-[![CI Status](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/workflows/NTDP%20Portal%20Tests/badge.svg)](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/actions)[![CI Status](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/workflows/NTDP%20Portal%20Tests/badge.svg)](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/actions)
+## 🌟 Features
 
-[![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-green)](https://owasp.org/Top10/)[![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-green)](https://owasp.org/Top10/)
+- 🔐 **Complete Security Testing** - OWASP Top 10 vulnerability assessment
+- 🚀 **Multi-Browser Support** - Chromium, Firefox, WebKit compatibility
+- 🏗️ **Page Object Model** - Maintainable and scalable test architecture
+- 📊 **Comprehensive Reporting** - HTML reports with screenshots and videos
+- 🔄 **CI/CD Ready** - Optimized GitHub Actions workflows
+- 🛡️ **Network Resilience** - Retry logic and timeout handling
+- 📈 **Performance Monitoring** - Test execution metrics and analysis
 
-[![Testing](https://img.shields.io/badge/Testing-Playwright-blue)](https://playwright.dev/)[![Testing](https://img.shields.io/badge/Testing-Playwright-blue)](https://playwright.dev/)
+---
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)[![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
+## 📁 Project Structure
 
+```
+ntdp-frontoffice-automation/
+├── 📁 .github/workflows/          # CI/CD pipeline configurations
+├── 📁 pages/                      # Page Object Model classes
+│   ├── LoginPage.ts              # Login page interactions
+│   └── DashboardPage.ts          # Dashboard page validation
+├── 📁 tests/                     # Test specifications
+│   ├── ci-friendly.spec.ts       # CI-optimized functional tests
+│   ├── security-ci.spec.ts       # Fast security assessment
+│   ├── security.spec.ts          # Comprehensive OWASP testing
+│   └── login-single.spec.ts      # Single login validation
+├── 📁 utils/                     # Helper functions and utilities
+├── 📁 testData/                  # Test data and credentials
+├── 📁 docs/                      # Documentation and guides
+├── 📁 test-results/              # Test execution artifacts
+├── 📁 playwright-report/         # HTML test reports
+└── 📄 playwright.config.ts       # Playwright configuration
+```
 
+## Features
 
-> **Comprehensive automated test suite for NTDP Portal using Playwright with TypeScript, featuring advanced security testing and OWASP Top 10 compliance validation.**> **Comprehensive automated test suite for NTDP Portal using Playwright with TypeScript, featuring advanced security testing and OWASP Top 10 compliance validation.**
+---
 
+## 🧪 Test Categories
 
-
-## 🌟 Features## 🌟 Features
-
-
-
-- 🔐 **Complete Security Testing** - OWASP Top 10 vulnerability assessment- 🔐 **Complete Security Testing** - OWASP Top 10 vulnerability assessment
-
-- 🚀 **Multi-Browser Support** - Chromium, Firefox, WebKit compatibility- 🚀 **Multi-Browser Support** - Chromium, Firefox, WebKit compatibility
-
-- 🏗️ **Page Object Model** - Maintainable and scalable test architecture- 🏗️ **Page Object Model** - Maintainable and scalable test architecture
-
-- 📊 **Comprehensive Reporting** - HTML reports with screenshots and videos- 📊 **Comprehensive Reporting** - HTML reports with screenshots and videos
-
-- 🔄 **CI/CD Ready** - Optimized GitHub Actions workflows- 🔄 **CI/CD Ready** - Optimized GitHub Actions workflows
-
-- 🛡️ **Network Resilience** - Retry logic and timeout handling- 🛡️ **Network Resilience** - Retry logic and timeout handling
-
-- 📈 **Performance Monitoring** - Test execution metrics and analysis- 📈 **Performance Monitoring** - Test execution metrics and analysis
-
-
-
-------
-
-
-
-## 📁 Project Structure## 📁 Project Structure
-
-
-
-```text```
-
-ntdp-frontoffice-automation/ntdp-frontoffice-automation/
-
-├── 📁 .github/workflows/          # CI/CD pipeline configurations├── 📁 .github/workflows/          # CI/CD pipeline configurations
-
-├── 📁 pages/                      # Page Object Model classes├── 📁 pages/                      # Page Object Model classes
-
-│   ├── LoginPage.ts              # Login page interactions│   ├── LoginPage.ts              # Login page interactions
-
-│   └── DashboardPage.ts          # Dashboard page validation│   └── DashboardPage.ts          # Dashboard page validation
-
-├── 📁 tests/                     # Test specifications├── 📁 tests/                     # Test specifications
-
-│   ├── ci-friendly.spec.ts       # CI-optimized functional tests│   ├── ci-friendly.spec.ts       # CI-optimized functional tests
-
-│   ├── security-ci.spec.ts       # Fast security assessment│   ├── security-ci.spec.ts       # Fast security assessment
-
-│   ├── security.spec.ts          # Comprehensive OWASP testing│   ├── security.spec.ts          # Comprehensive OWASP testing
-
-│   └── login-single.spec.ts      # Single login validation│   └── login-single.spec.ts      # Single login validation
-
-├── 📁 utils/                     # Helper functions and utilities├── 📁 utils/                     # Helper functions and utilities
-
-├── 📁 testData/                  # Test data and credentials├── 📁 testData/                  # Test data and credentials
-
-├── 📁 docs/                      # Documentation and guides├── 📁 docs/                      # Documentation and guides
-
-├── 📁 test-results/              # Test execution artifacts├── 📁 test-results/              # Test execution artifacts
-
-├── 📁 playwright-report/         # HTML test reports├── 📁 playwright-report/         # HTML test reports
-
-└── 📄 playwright.config.ts       # Playwright configuration└── 📄 playwright.config.ts       # Playwright configuration
-
-``````
-
-
-
----## Features
-
-
-
-## 🧪 Test Categories---
-
-
-
-### 1. 🔐 Security Testing Suite## 🧪 Test Categories
-
-
-
-**Comprehensive OWASP Top 10 Coverage**### 1. 🔐 Security Testing Suite
-
+### 1. 🔐 Security Testing Suite
 **Comprehensive OWASP Top 10 Coverage**
 
 | Test Category | Tests | Coverage |
-
-|---------------|-------|----------|| Test Category | Tests | Coverage |
-
-| **Pre-login Security** | 6 tests | Authentication, Headers, HTTPS ||---------------|-------|----------|
-
-| **Post-login Security** | 6 tests | Session, Authorization, Data || **Pre-login Security** | 6 tests | Authentication, Headers, HTTPS |
-
-| **OWASP Top 10** | 10 tests | Complete vulnerability assessment || **Post-login Security** | 6 tests | Session, Authorization, Data |
-
-| **Injection Testing** | 3 tests | SQL injection, XSS, Command injection || **OWASP Top 10** | 10 tests | Complete vulnerability assessment |
-
-| **Security Headers** | 5 tests | CSP, HSTS, X-Frame-Options, etc. || **Injection Testing** | 3 tests | SQL injection, XSS, Command injection |
-
+|---------------|-------|----------|
+| **Pre-login Security** | 6 tests | Authentication, Headers, HTTPS |
+| **Post-login Security** | 6 tests | Session, Authorization, Data |
+| **OWASP Top 10** | 10 tests | Complete vulnerability assessment |
+| **Injection Testing** | 3 tests | SQL injection, XSS, Command injection |
 | **Security Headers** | 5 tests | CSP, HSTS, X-Frame-Options, etc. |
 
 ### 2. ⚡ CI-Friendly Tests
+**Optimized for fast CI/CD execution**
 
-### 2. ⚡ CI-Friendly Tests
+- Multi-browser compatibility testing
+- Network resilience validation
+- Timeout and retry logic
+- Login flow verification
+- Element interaction testing
 
-**Optimized for fast CI/CD execution****Optimized for fast CI/CD execution**
-
-
-
-- Multi-browser compatibility testing- Multi-browser compatibility testing
-
-- Network resilience validation- Network resilience validation
-
-- Timeout and retry logic- Timeout and retry logic
-
-- Login flow verification- Login flow verification
-
-- Element interaction testing- Element interaction testing
-
-
-
-### 3. 🎯 Functional Tests### 3. 🎯 Functional Tests
-
-**Core application functionality**
-
+### 3. 🎯 Functional Tests
 **Core application functionality**
 
 - User authentication flows
-
-- User authentication flows- Dashboard navigation
-
-- Dashboard navigation- Form validation
-
-- Form validation- Error handling
-
-- Error handling- Success scenarios
-
+- Dashboard navigation
+- Form validation
+- Error handling
 - Success scenarios
 
 ---
 
----
-
 ## 🚀 Quick Start
-
-## 🚀 Quick Start
-
-### Prerequisites
 
 ### Prerequisites
 
 - **Node.js** 18+ 
-
-- **Node.js** 18+ - **npm** or **yarn**
-
-- **npm** or **yarn**- **Git**
-
+- **npm** or **yarn**
 - **Git**
 
 ### Installation
 
-### Installation
-
 ```bash
-
-```bash# 1. Clone the repository
-
-# 1. Clone the repositorygit clone https://github.com/UsamaArshadJadoon/NTDPFrontOffice.git
-
-git clone https://github.com/UsamaArshadJadoon/NTDPFrontOffice.gitcd NTDPFrontOffice
-
+# 1. Clone the repository
+git clone https://github.com/UsamaArshadJadoon/NTDPFrontOffice.git
 cd NTDPFrontOffice
 
 # 2. Install dependencies
-
-# 2. Install dependenciesnpm install
-
 npm install
 
 # 3. Install Playwright browsers
-
-# 3. Install Playwright browsersnpx playwright install --with-deps
-
 npx playwright install --with-deps
 
 # 4. Setup environment
-
-# 4. Setup environmentcp .env.example .env
-
-cp .env.example .env# Edit .env with your configuration
-
-# Edit .env with your configuration```
-
+cp .env.example .env
+# Edit .env with your configuration
 ```
-
-### Environment Configuration
 
 ### Environment Configuration
 
 ```env
-
-```env# Application Configuration
-
-# Application ConfigurationBASE_URL=https://portal-uat.ntdp-sa.com
-
-BASE_URL=https://portal-uat.ntdp-sa.comSAUDI_ID=1111111111
-
-SAUDI_ID=1111111111EXPECTED_NAME=Dummy
-
+# Application Configuration
+BASE_URL=https://portal-uat.ntdp-sa.com
+SAUDI_ID=1111111111
 EXPECTED_NAME=Dummy
 
 # Security Testing (Optional)
-
-# Security Testing (Optional)ZAP_BASE_URL=http://localhost:8080
-
-ZAP_BASE_URL=http://localhost:8080ZAP_API_KEY=your-zap-api-key
-
-ZAP_API_KEY=your-zap-api-key```
-
+ZAP_BASE_URL=http://localhost:8080
+ZAP_API_KEY=your-zap-api-key
 ```
 
 ---
 
----
-
 ## 🎮 Usage
-
-## 🎮 Usage
-
-### Essential Commands
 
 ### Essential Commands
 
 ```bash
-
-```bash# 🚀 Quick test run (Chromium only)
-
-# 🚀 Quick test run (Chromium only)npm test
-
+# 🚀 Quick test run (Chromium only)
 npm test
 
 # 🌐 All browsers
-
-# 🌐 All browsersnpm run test:all
-
 npm run test:all
 
 # 👀 Visual mode (headed)
-
-# 👀 Visual mode (headed)npm run test:headed
-
 npm run test:headed
 
 # 🐛 Debug mode
-
-# 🐛 Debug modenpm run test:debug
-
 npm run test:debug
 
 # 🎨 Interactive UI
-
-# 🎨 Interactive UInpm run test:ui
-
 npm run test:ui
 
 # 📊 Generate reports
-
-# 📊 Generate reportsnpm run test:report
-
-npm run test:report```
-
+npm run test:report
 ```
 
 ### Specialized Testing
 
-### Specialized Testing
-
 ```bash
-
-```bash# 🔐 Security Testing
-
-# 🔐 Security Testingnpm run test:security                    # Full security suite
-
-npm run test:security                    # Full security suitenpm run test:security:basic             # Basic security scan
-
-npm run test:security:basic             # Basic security scannpm run test:security:owasp             # OWASP Top 10 tests
-
-npm run test:security:owasp             # OWASP Top 10 testsnpm run test:security:vulnerabilities   # Vulnerability testing
-
+# 🔐 Security Testing
+npm run test:security                    # Full security suite
+npm run test:security:basic             # Basic security scan
+npm run test:security:owasp             # OWASP Top 10 tests
 npm run test:security:vulnerabilities   # Vulnerability testing
 
 # ⚡ CI-Optimized
-
-# ⚡ CI-Optimizednpm run test:ci                         # CI with reports
-
-npm run test:ci                         # CI with reportsnpm run test:ci:chromium               # Chromium only
-
-npm run test:ci:chromium               # Chromium onlynpm run test:ci:firefox                # Firefox only
-
-npm run test:ci:firefox                # Firefox onlynpm run test:ci:webkit                 # WebKit only
-
-npm run test:ci:webkit                 # WebKit only```
-
+npm run test:ci                         # CI with reports
+npm run test:ci:chromium               # Chromium only
+npm run test:ci:firefox                # Firefox only
+npm run test:ci:webkit                 # WebKit only
 ```
-
-### Development Commands
 
 ### Development Commands
 
 ```bash
-
-```bash# 🔍 Code quality
-
-# 🔍 Code qualitynpm run lint                            # ESLint check
-
-npm run lint                            # ESLint checknpm run type-check                      # TypeScript validation
-
+# 🔍 Code quality
+npm run lint                            # ESLint check
 npm run type-check                      # TypeScript validation
 
 # 📦 Installation
-
-# 📦 Installationnpm run install:ci                      # CI environment setup
-
-npm run install:ci                      # CI environment setup```
-
+npm run install:ci                      # CI environment setup
 ```
 
 ---
 
----
-
 ## 🛡️ Security Testing
-
-## 🛡️ Security Testing
-
-### OWASP Top 10 2021 Coverage
 
 ### OWASP Top 10 2021 Coverage
 
 | OWASP Category | Status | Tests | Risk Level |
-
-| OWASP Category | Status | Tests | Risk Level ||----------------|--------|-------|------------|
-
-|----------------|--------|-------|------------|| **A01** - Broken Access Control | ✅ Covered | 4 tests | Medium |
-
-| **A01** - Broken Access Control | ✅ Covered | 4 tests | Medium || **A02** - Cryptographic Failures | ✅ Covered | 3 tests | Medium |
-
-| **A02** - Cryptographic Failures | ✅ Covered | 3 tests | Medium || **A03** - Injection | ✅ Covered | 5 tests | Low |
-
-| **A03** - Injection | ✅ Covered | 5 tests | Low || **A04** - Insecure Design | ✅ Covered | 2 tests | Low |
-
-| **A04** - Insecure Design | ✅ Covered | 2 tests | Low || **A05** - Security Misconfiguration | ✅ Covered | 6 tests | Medium |
-
-| **A05** - Security Misconfiguration | ✅ Covered | 6 tests | Medium || **A06** - Vulnerable Components | ✅ Covered | 2 tests | Low |
-
-| **A06** - Vulnerable Components | ✅ Covered | 2 tests | Low || **A07** - Authentication Failures | ✅ Covered | 4 tests | Low |
-
-| **A07** - Authentication Failures | ✅ Covered | 4 tests | Low || **A08** - Data Integrity Failures | ✅ Covered | 2 tests | Low |
-
-| **A08** - Data Integrity Failures | ✅ Covered | 2 tests | Low || **A09** - Logging Failures | ✅ Covered | 2 tests | Low |
-
-| **A09** - Logging Failures | ✅ Covered | 2 tests | Low || **A10** - Server-Side Request Forgery | ✅ Covered | 2 tests | Low |
-
+|----------------|--------|-------|------------|
+| **A01** - Broken Access Control | ✅ Covered | 4 tests | Medium |
+| **A02** - Cryptographic Failures | ✅ Covered | 3 tests | Medium |
+| **A03** - Injection | ✅ Covered | 5 tests | Low |
+| **A04** - Insecure Design | ✅ Covered | 2 tests | Low |
+| **A05** - Security Misconfiguration | ✅ Covered | 6 tests | Medium |
+| **A06** - Vulnerable Components | ✅ Covered | 2 tests | Low |
+| **A07** - Authentication Failures | ✅ Covered | 4 tests | Low |
+| **A08** - Data Integrity Failures | ✅ Covered | 2 tests | Low |
+| **A09** - Logging Failures | ✅ Covered | 2 tests | Low |
 | **A10** - Server-Side Request Forgery | ✅ Covered | 2 tests | Low |
 
 ### Security Test Features
 
-### Security Test Features
-
 - **🔍 Automated Vulnerability Scanning**
-
-- **🔍 Automated Vulnerability Scanning**- **🍪 Cookie Security Analysis** 
-
-- **🍪 Cookie Security Analysis** - **🔒 HTTPS Protocol Validation**
-
-- **🔒 HTTPS Protocol Validation**- **🛡️ Security Header Verification**
-
-- **🛡️ Security Header Verification**- **💉 Injection Attack Testing**
-
-- **💉 Injection Attack Testing**- **📸 Screenshot Evidence Collection**
-
-- **📸 Screenshot Evidence Collection**- **📋 Detailed Security Reports**
-
+- **🍪 Cookie Security Analysis** 
+- **🔒 HTTPS Protocol Validation**
+- **🛡️ Security Header Verification**
+- **💉 Injection Attack Testing**
+- **📸 Screenshot Evidence Collection**
 - **📋 Detailed Security Reports**
 
 ---
 
----
-
 ## 🔄 CI/CD Integration
-
-## 🔄 CI/CD Integration
-
-### GitHub Actions Workflows
 
 ### GitHub Actions Workflows
 
 | Workflow | Trigger | Purpose | Duration |
-
-| Workflow | Trigger | Purpose | Duration ||----------|---------|---------|----------|
-
-|----------|---------|---------|----------|| **simple.yml** | Push/PR → main | Essential tests + basic security | ~2-3 min |
-
-| **simple.yml** | Push/PR → main | Essential tests + basic security | ~2-3 min || **security-testing.yml** | Manual | Comprehensive OWASP testing | ~15-20 min |
-
-| **security-testing.yml** | Manual | Comprehensive OWASP testing | ~15-20 min || **snyk-security.yml** | Manual | Dependency vulnerability scan | ~5 min |
-
+|----------|---------|---------|----------|
+| **simple.yml** | Push/PR → main | Essential tests + basic security | ~2-3 min |
+| **security-testing.yml** | Manual | Comprehensive OWASP testing | ~15-20 min |
 | **snyk-security.yml** | Manual | Dependency vulnerability scan | ~5 min |
 
 ### Supported Environments
 
-### Supported Environments
-
 - ✅ **Ubuntu Latest** (Primary CI environment)
-
-- ✅ **Ubuntu Latest** (Primary CI environment)- ✅ **Windows** (Local development)
-
-- ✅ **Windows** (Local development)- ✅ **macOS** (Cross-platform testing)
-
+- ✅ **Windows** (Local development)
 - ✅ **macOS** (Cross-platform testing)
 
 ### Browser Matrix
 
-### Browser Matrix
-
 - 🌐 **Chromium** (Primary)
-
-- 🌐 **Chromium** (Primary)- 🦊 **Firefox** 
-
-- 🦊 **Firefox** - 🍎 **WebKit** (Safari engine)
-
+- 🦊 **Firefox** 
 - 🍎 **WebKit** (Safari engine)
 
 ## Test Cases
 
----
-
 ### Login Tests (`tests/login.spec.ts`)
 
-## 📊 Reporting & Analytics
-
 1. **should successfully login with valid Saudi ID**
-
-### Test Reports   - Navigates to login page
-
+   - Navigates to login page
    - Enters valid Saudi ID (1111111111)
-
-#### 📈 HTML Reports   - Clicks login button
-
+   - Clicks login button
    - Waits for dashboard to load
+   - Verifies welcome message "Welcome Dummy"
 
-- **Interactive test results** with filtering   - Verifies welcome message "Welcome Dummy"
-
-- **Screenshots** for failed tests
-
-- **Video recordings** of test execution2. **should display login page elements correctly**
-
-- **Performance metrics** and timing   - Verifies URL contains "login"
-
-- **Error traces** with stack information   - Checks Saudi ID input is visible
-
+2. **should display login page elements correctly**
+   - Verifies URL contains "login"
+   - Checks Saudi ID input is visible
    - Checks login button is visible
 
-#### 🔐 Security Reports
-
 3. **should enter Saudi ID correctly**
+   - Enters Saudi ID in input field
+   - Verifies input value is correct
 
-- **OWASP Top 10 assessment** with risk ratings   - Enters Saudi ID in input field
+4. **should have enabled login button**
+   - Verifies login button is visible and enabled
 
-- **Vulnerability findings** with remediation steps   - Verifies input value is correct
+## Page Objects
 
-- **Security header analysis** 
-
-- **Cookie security evaluation**4. **should have enabled login button**
-
-- **Compliance status** reporting   - Verifies login button is visible and enabled
-
-
-
-#### 📋 CI Reports## Page Objects
-
-
-
-- **JUnit XML** for CI integration### LoginPage (`pages/LoginPage.ts`)
-
-- **Test result summaries**
-
-- **Artifact collection****Methods:**
-
-- **Failure analysis**- `goto()` - Navigate to login page
-
-- `waitForPageLoad()` - Wait for page to fully load
-
-### Generated Artifacts- `enterSaudiId(saudiId)` - Enter Saudi ID
-
-- `clickLogin()` - Click login button
-
-```text- `login(saudiId)` - Complete login flow
-
-test-results/- `verifyLoginPageElements()` - Verify page elements
-
-├── 📁 security/               # Security assessment reports
-
-│   ├── security-scan-*.md    # Detailed findings**Locators:**
-
-│   └── *.png                 # Security screenshots- `saudiIdInput` - Saudi ID input field
-
-├── 📁 screenshots/           # Failure screenshots- `loginButton` - Login button
-
-├── 📁 videos/               # Test execution videos
-
-└── 📁 traces/               # Debug traces### DashboardPage (`pages/DashboardPage.ts`)
-
-```
+### LoginPage (`pages/LoginPage.ts`)
 
 **Methods:**
-
----- `waitForPageLoad()` - Wait for dashboard to load
-
-- `verifyWelcomeMessage(name)` - Verify welcome message
-
-## 🏗️ Architecture- `verifySuccessfulLogin()` - Verify login success
-
-- `getUserName()` - Get current user name
-
-### Page Object Model Implementation
+- `goto()` - Navigate to login page
+- `waitForPageLoad()` - Wait for page to fully load
+- `enterSaudiId(saudiId)` - Enter Saudi ID
+- `clickLogin()` - Click login button
+- `login(saudiId)` - Complete login flow
+- `verifyLoginPageElements()` - Verify page elements
 
 **Locators:**
+- `saudiIdInput` - Saudi ID input field
+- `loginButton` - Login button
 
-```typescript- `welcomeHeading` - Welcome heading element
+### DashboardPage (`pages/DashboardPage.ts`)
 
-// LoginPage.ts - Clean, maintainable page interactions- `mainContent` - Main content area
+**Methods:**
+- `waitForPageLoad()` - Wait for dashboard to load
+- `verifyWelcomeMessage(name)` - Verify welcome message
+- `verifySuccessfulLogin()` - Verify login success
+- `getUserName()` - Get current user name
 
-export class LoginPage {
+**Locators:**
+- `welcomeHeading` - Welcome heading element
+- `mainContent` - Main content area
 
-  private page: Page;## Utilities
+## Utilities
 
-  
+### helpers.ts (`utils/helpers.ts`)
 
-  // Locators### helpers.ts (`utils/helpers.ts`)
+- `waitForElement()` - Wait for element visibility
+- `waitForNetworkIdle()` - Wait for network to be idle
+- `waitForNavigation()` - Wait for page navigation
+- `waitForUrlChange()` - Wait for URL change
+- `waitForUrlNotContaining()` - Wait for URL to not contain pattern
+- `waitForCondition()` - Custom wait with retry logic
+- `takeScreenshot()` - Capture screenshot with timestamp
+- `delay()` - Simple delay function
 
-  private saudiIdInput = 'input[name="saudiId"]';
+## Test Data
 
-  private loginButton = 'button[type="submit"]';- `waitForElement()` - Wait for element visibility
+### credentials.ts (`testData/credentials.ts`)
 
-  - `waitForNetworkIdle()` - Wait for network to be idle
-
-  // Actions- `waitForNavigation()` - Wait for page navigation
-
-  async goto(): Promise<void>- `waitForUrlChange()` - Wait for URL change
-
-  async enterSaudiId(saudiId: string): Promise<void>- `waitForUrlNotContaining()` - Wait for URL to not contain pattern
-
-  async clickLogin(): Promise<void>- `waitForCondition()` - Custom wait with retry logic
-
-  async waitForPageLoad(): Promise<void>- `takeScreenshot()` - Capture screenshot with timestamp
-
-  async hasLoginError(): Promise<boolean>- `delay()` - Simple delay function
-
+```typescript
+validCredentials = {
+  saudiId: '1111111111',
+  expectedName: 'Dummy'
 }
+```
 
-```## Test Data
+## Configuration
 
+### Playwright Config (`playwright.config.ts`)
 
-
-### Test Data Management### credentials.ts (`testData/credentials.ts`)
-
-
-
-```typescript```typescript
-
-// Centralized test datavalidCredentials = {
-
-export const testData = {  saudiId: '1111111111',
-
-  validCredentials: {  expectedName: 'Dummy'
-
-    saudiId: process.env.SAUDI_ID || '1111111111',}
-
-    expectedName: process.env.EXPECTED_NAME || 'Dummy'```
-
-  },
-
-  ## Configuration
-
-  securityPayloads: {
-
-    sqlInjection: ["1' OR '1'='1", "'; DROP TABLE users;--"],### Playwright Config (`playwright.config.ts`)
-
-    xss: ["<script>alert('XSS')</script>", "javascript:alert(1)"]
-
-  }- Base URL: `https://portal-uat.ntdp-sa.com`
-
-};- Timeout: 15s for actions, 30s for navigation
-
-```- Retries: 2 (in CI)
-
+- Base URL: `https://portal-uat.ntdp-sa.com`
+- Timeout: 15s for actions, 30s for navigation
+- Retries: 2 (in CI)
 - Screenshots: On failure
-
----- Videos: On failure
-
+- Videos: On failure
 - Trace: On first retry
-
-## 📈 Performance Metrics
 
 ## Credentials
 
-### Current Test Statistics
-
 - Saudi ID: 1111111111 (no password required)
+- URL: https://portal-uat.ntdp-sa.com/login
 
-| Metric | Value | Target |- URL: https://portal-uat.ntdp-sa.com/login
+## Best Practices Implemented
 
-|--------|-------|--------|
-
-| **Total Tests** | 30 | - |## Best Practices Implemented
-
-| **Success Rate** | 100% | >95% |
-
-| **Execution Time** | ~5 min | <10 min |1. ✅ **Page Object Model** - Separation of test logic and page interactions
-
-| **Coverage** | OWASP Top 10 | 100% |2. ✅ **Explicit Waits** - Proper wait strategies for reliable tests
-
-| **Browsers** | 3 | 3 |3. ✅ **DRY Principle** - Reusable methods and utilities
-
-| **Security Issues** | 6 (Medium) | 0 (High) |4. ✅ **Type Safety** - TypeScript for better code quality
-
+1. ✅ **Page Object Model** - Separation of test logic and page interactions
+2. ✅ **Explicit Waits** - Proper wait strategies for reliable tests
+3. ✅ **DRY Principle** - Reusable methods and utilities
+4. ✅ **Type Safety** - TypeScript for better code quality
 5. ✅ **Test Data Management** - Centralized test data
-
-### Performance Optimization6. ✅ **Clear Assertions** - Meaningful test verifications
-
+6. ✅ **Clear Assertions** - Meaningful test verifications
 7. ✅ **Network Idle** - Wait for complete page loads
+8. ✅ **Element Verification** - Confirm elements before interaction
 
-- ⚡ **Parallel Execution** - Multiple tests run simultaneously8. ✅ **Element Verification** - Confirm elements before interaction
-
-- 🎯 **Smart Retries** - Automatic retry on network failures  
-
-- 📦 **Artifact Optimization** - Efficient screenshot/video capture## Contributing
-
-- 🔄 **CI Caching** - Dependency and browser caching
+## Contributing
 
 When adding new tests:
-
----1. Create/update page objects in `pages/` directory
-
+1. Create/update page objects in `pages/` directory
 2. Add test data to `testData/` directory
-
-## 🐛 Troubleshooting3. Write tests in `tests/` directory
-
+3. Write tests in `tests/` directory
 4. Use helper functions from `utils/` for common operations
-
-### Common Issues & Solutions5. Follow existing naming conventions and patterns
-
+5. Follow existing naming conventions and patterns
 #   T e s t   r u n   t r i g g e r e d   o n   1 1 / 1 1 / 2 0 2 5   1 8 : 1 2 : 2 8 
-
-#### 🌐 Network Timeouts 
-
  
-
-```bash 
-
-# Issue: Tests failing due to network timeouts 
-# Solution: Increase timeout values
-npx playwright test --timeout=120000
-```
-
-#### 🔍 Element Not Found
-
-```bash
-# Issue: Selectors not working after UI changes
-# Solution: Update page object selectors
-# Check browser developer tools for current selectors
-```
-
-#### 🔐 Security Test Failures
-
-```bash
-# Issue: Security tests reporting false positives
-# Solution: Review security configuration
-# Check server security headers and HTTPS setup
-```
-
-### Debug Tools
-
-```bash
-# 🐛 Debug specific test
-npx playwright test tests/login-single.spec.ts --debug
-
-# 📹 Record test execution
-npx playwright test --headed --video=on
-
-# 🔍 Generate trace
-npx playwright test --trace=on
-```
-
----
-
-## 🤝 Contributing
-
-### Development Workflow
-
-1. **🍴 Fork** the repository
-2. **🌿 Create** feature branch (`git checkout -b feature/amazing-feature`)
-3. **✅ Write** tests following existing patterns
-4. **🧪 Run** full test suite (`npm run test:all`)
-5. **📚 Update** documentation
-6. **🚀 Submit** pull request
-
-### Code Standards
-
-- ✅ **TypeScript** for type safety
-- ✅ **ESLint** configuration compliance
-- ✅ **Page Object Model** pattern
-- ✅ **Comprehensive test coverage**
-- ✅ **Security-first approach**
-
-### Commit Convention
-
-```bash
-feat: add new security test for XSS validation
-fix: resolve timeout issue in CI environment  
-docs: update README with new test commands
-test: add comprehensive OWASP A01 coverage
-```
-
----
-
-## 📋 Current Security Assessment
-
-### 🎯 Security Status
-
-| Risk Level | Count | Status |
-|------------|-------|---------|
-| 🔴 **High** | 0 | ✅ Clean |
-| 🟡 **Medium** | 6 | ⚠️ Review Required |
-| 🟢 **Low** | 0 | ✅ Clean |
-
-### 🔧 Remediation Recommendations
-
-1. **🛡️ Security Headers**
-   - Implement `X-Frame-Options: DENY`
-   - Add `Content-Security-Policy`
-   - Configure `Strict-Transport-Security`
-
-2. **🍪 Cookie Security**  
-   - Add `Secure` flag for HTTPS cookies
-   - Implement `HttpOnly` for session cookies
-   - Configure proper `SameSite` attributes
-
-3. **🔐 Access Control**
-   - Review unauthorized access paths
-   - Implement proper authentication checks
-   - Add authorization middleware
-
----
-
-## 📚 Documentation
-
-### 📖 Additional Resources
-
-- [**Playwright Documentation**](https://playwright.dev/) - Official Playwright docs
-- [**OWASP Top 10**](https://owasp.org/Top10/) - Security vulnerability guide
-- [**TypeScript Handbook**](https://www.typescriptlang.org/docs/) - TypeScript reference
-
-### 📁 Project Documentation
-
-- [**Test Execution Report**](./TEST-EXECUTION-REPORT.md) - Detailed test results
-- [**Security Assessment**](./docs/security-assessment.md) - Security findings
-- [**CI/CD Guide**](./docs/ci-cd-setup.md) - Pipeline configuration
-- [**Troubleshooting Guide**](./docs/troubleshooting.md) - Common issues
-
----
-
-## 📄 License
-
-This project is licensed under the **ISC License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🆘 Support
-
-### Getting Help
-
-1. 📖 **Documentation** - Check existing docs and guides
-2. 🐛 **Issues** - Search existing GitHub issues  
-3. 💬 **Discussions** - Community support and questions
-4. 🚨 **Bug Reports** - Create detailed issue with reproduction steps
-
-### Contact
-
-- **Repository**: [UsamaArshadJadoon/NTDPFrontOffice](https://github.com/UsamaArshadJadoon/NTDPFrontOffice)
-- **Issues**: [GitHub Issues](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/issues)
-
----
-
-<div align="center">
-
-**⭐ Star this repository if it helped you! ⭐**
-
-![Test Status](https://img.shields.io/badge/Tests-30%20Passing-brightgreen)
-![Security](https://img.shields.io/badge/Security-OWASP%20Compliant-green)
-![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
-
----
-
-**Last Updated**: November 2025 | **Framework**: Playwright + TypeScript | **Security**: OWASP Top 10 2021
-
-</div>
+  
+ 
