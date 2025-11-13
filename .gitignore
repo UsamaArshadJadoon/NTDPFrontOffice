@@ -5,7 +5,3 @@ test-results/
 dist/
 .DS_Store
 *.log
-
-# SonarQube (in case it gets installed again)
-.sonarlint/
-sonar-project.properties
