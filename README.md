@@ -192,12 +192,44 @@ npm run install:ci                      # CI environment setup
 ### Security Test Features
 
 - **Automated Vulnerability Scanning**
+- **OWASP ZAP Integration** - Comprehensive security scanning
 - **Cookie Security Analysis**
 - **HTTPS Protocol Validation**
 - **Security Header Verification**
 - **Injection Attack Testing**
 - **Screenshot Evidence Collection**
-- **Detailed Security Reports**
+- **Detailed Security Reports** (HTML, JSON, Markdown)
+
+---
+
+## OWASP ZAP Integration
+
+This framework includes **comprehensive OWASP ZAP (Zed Attack Proxy)** integration for automated security testing.
+
+### Quick Start with ZAP
+
+```bash
+# Start ZAP (automated script)
+.\start-zap.ps1
+
+# Run ZAP security tests
+npm run test:zap              # All ZAP tests
+npm run test:zap:passive      # Quick passive scan (~10s)
+npm run test:zap:spider       # Spider scan (~1-2min)
+npm run test:zap:active       # Active scan (~5-10min)
+npm run test:zap:full         # Full authenticated scan
+```
+
+### ZAP Features
+
+- **Passive Scanning** - Non-intrusive security analysis
+- **Active Scanning** - Attack simulation and penetration testing
+- **Spider Scanning** - Application mapping and discovery
+- **Authenticated Testing** - Post-login security assessment
+- **Multiple Report Formats** - HTML, JSON, Markdown
+- **CI/CD Integration** - Docker support for pipelines
+
+For detailed ZAP setup and usage, see [ZAP Integration Guide](docs/ZAP-INTEGRATION.md).
 
 ---
 
@@ -209,6 +241,7 @@ npm run install:ci                      # CI environment setup
 |----------|---------|---------|----------|
 | **simple.yml**| Push/PR  main | Essential tests + basic security | ~2-3 min |
 | **security-testing.yml**| Manual | Comprehensive OWASP testing | ~15-20 min |
+| **ZAP Security Scan** | Schedule/Manual | OWASP ZAP automated scanning | ~10-15 min |
 
 ### Supported Environments
 

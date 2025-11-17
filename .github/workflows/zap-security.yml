@@ -1,0 +1,200 @@
+name: OWASP ZAP Security Scan
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      scan_type:
+        description: "Type of ZAP scan to run"
+        required: true
+        default: "passive"
+        type: choice
+        options:
+          - passive
+          - spider
+          - active
+          - full
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  zap-scan:
+    name: ZAP Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start OWASP ZAP
+        run: |
+          docker run -d \
+            --name zap-proxy \
+            -p 8080:8080 \
+            -e ZAP_API_KEY=changeme \
+            owasp/zap2docker-stable \
+            zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.key=changeme
+
+          echo "⏳ Waiting for ZAP to start..."
+          sleep 30
+
+          # Verify ZAP is running
+          curl -s http://localhost:8080 || echo "ZAP may not be ready yet"
+
+      - name: Run ZAP Passive Scan
+        if: ${{ github.event.inputs.scan_type == 'passive' || github.event_name == 'schedule' }}
+        env:
+          ZAP_API_KEY: changeme
+          ZAP_PROXY: http://localhost:8080
+          ZAP_URL: http://localhost:8080
+          SAUDI_ID: ${{ secrets.SAUDI_ID }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npm run test:zap:passive
+        continue-on-error: true
+
+      - name: Run ZAP Spider Scan
+        if: ${{ github.event.inputs.scan_type == 'spider' }}
+        env:
+          ZAP_API_KEY: changeme
+          ZAP_PROXY: http://localhost:8080
+          ZAP_URL: http://localhost:8080
+          SAUDI_ID: ${{ secrets.SAUDI_ID }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npm run test:zap:spider
+        continue-on-error: true
+
+      - name: Run ZAP Active Scan
+        if: ${{ github.event.inputs.scan_type == 'active' }}
+        env:
+          ZAP_API_KEY: changeme
+          ZAP_PROXY: http://localhost:8080
+          ZAP_URL: http://localhost:8080
+          SAUDI_ID: ${{ secrets.SAUDI_ID }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npm run test:zap:active
+        continue-on-error: true
+
+      - name: Run ZAP Full Scan
+        if: ${{ github.event.inputs.scan_type == 'full' }}
+        env:
+          ZAP_API_KEY: changeme
+          ZAP_PROXY: http://localhost:8080
+          ZAP_URL: http://localhost:8080
+          SAUDI_ID: ${{ secrets.SAUDI_ID }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: npm run test:zap:full
+        continue-on-error: true
+
+      - name: Upload ZAP Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-security-reports-${{ github.run_number }}
+          path: test-results/zap-reports/
+          retention-days: 30
+
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-playwright-report-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 30
+
+      - name: Generate Security Summary
+        if: always()
+        run: |
+          echo "## 🔒 OWASP ZAP Security Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Scan Type**: ${{ github.event.inputs.scan_type || 'passive (scheduled)' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Date**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Check if reports exist
+          if [ -d "test-results/zap-reports" ] && [ "$(ls -A test-results/zap-reports)" ]; then
+            echo "✅ **Status**: Scan completed successfully" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📊 Reports Generated" >> $GITHUB_STEP_SUMMARY
+            echo "- HTML Reports" >> $GITHUB_STEP_SUMMARY
+            echo "- Markdown Reports" >> $GITHUB_STEP_SUMMARY
+            echo "- JSON Reports" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check the **Artifacts** section above to download reports." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Status**: No reports generated (scan may have failed)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Stop ZAP
+        if: always()
+        run: |
+          echo "🛑 Stopping ZAP container..."
+          docker stop zap-proxy || true
+          docker rm zap-proxy || true
+
+      - name: Comment PR with Results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const scanType = '${{ github.event.inputs.scan_type || 'passive' }}';
+
+            let comment = `## 🔒 OWASP ZAP Security Scan Results\n\n`;
+            comment += `**Scan Type**: ${scanType}\n`;
+            comment += `**Workflow Run**: [#${context.runNumber}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n\n`;
+
+            // Try to read summary from reports
+            try {
+              const reportsDir = 'test-results/zap-reports';
+              if (fs.existsSync(reportsDir)) {
+                const files = fs.readdirSync(reportsDir);
+                const jsonReports = files.filter(f => f.endsWith('.json'));
+                
+                if (jsonReports.length > 0) {
+                  const latestReport = jsonReports[jsonReports.length - 1];
+                  const reportData = JSON.parse(fs.readFileSync(`${reportsDir}/${latestReport}`, 'utf8'));
+                  
+                  comment += `### 📊 Summary\n\n`;
+                  comment += `| Risk Level | Count |\n`;
+                  comment += `|------------|-------|\n`;
+                  comment += `| 🔴 High | ${reportData.summary.high} |\n`;
+                  comment += `| 🟠 Medium | ${reportData.summary.medium} |\n`;
+                  comment += `| 🟡 Low | ${reportData.summary.low} |\n`;
+                  comment += `| ℹ️ Informational | ${reportData.summary.informational} |\n`;
+                  comment += `| **Total** | **${reportData.summary.total}** |\n\n`;
+                  
+                  if (reportData.summary.high > 0) {
+                    comment += `⚠️ **Action Required**: ${reportData.summary.high} high-risk vulnerabilities found!\n\n`;
+                  }
+                }
+                
+                comment += `\n📄 Detailed reports available in workflow artifacts.`;
+              } else {
+                comment += `⚠️ No reports generated. Check workflow logs for details.`;
+              }
+            } catch (error) {
+              comment += `⚠️ Could not parse scan results. Check workflow artifacts for detailed reports.`;
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
