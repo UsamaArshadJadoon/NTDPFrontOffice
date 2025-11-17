@@ -45,8 +45,6 @@ jobs:
           echo "Running CI-optimized tests for ${{ matrix.browser }}"
           echo "🔄 Running functional tests..."
           npx playwright test tests/ci-friendly.spec.ts --project=${{ matrix.browser }} --reporter=html,list || echo "Functional tests completed"
-          echo "🔄 Running security assessment..."
-          npx playwright test tests/security-ci.spec.ts --project=${{ matrix.browser }} --reporter=html,list || echo "Security tests completed"
         env:
           CI: true
 

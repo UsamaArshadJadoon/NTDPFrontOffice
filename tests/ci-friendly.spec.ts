@@ -22,7 +22,15 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
       } catch (error) {
         console.log(`⚠️ Navigation attempt ${attempt} failed:`, error);
         if (attempt < 3) {
-          await page.waitForTimeout(10000); // Wait 10 seconds before retry
+          try {
+            // Only wait if page is still valid
+            if (!page.isClosed()) {
+              await page.waitForTimeout(3000); // Wait 3 seconds before retry
+            }
+          } catch {
+            // If wait fails, just continue to next attempt
+            console.log('⚠️ Could not wait between retries, continuing...');
+          }
         }
       }
     }
@@ -67,7 +75,13 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
       } catch (error) {
         console.log(`⚠️ Navigation attempt ${attempt} failed:`, error);
         if (attempt < 3) {
-          await page.waitForTimeout(10000); // Wait 10 seconds before retry
+          try {
+            if (!page.isClosed()) {
+              await page.waitForTimeout(3000); // Wait 3 seconds before retry
+            }
+          } catch {
+            console.log('⚠️ Could not wait between retries, continuing...');
+          }
         }
       }
     }
@@ -122,7 +136,13 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
       } catch (error) {
         console.log(`⚠️ Navigation attempt ${attempt} failed:`, error instanceof Error ? error.message : String(error));
         if (attempt < 2) {
-          await page.waitForTimeout(5000); // Reduced wait time between retries
+          try {
+            if (!page.isClosed()) {
+              await page.waitForTimeout(3000); // Reduced wait time between retries
+            }
+          } catch {
+            console.log('⚠️ Could not wait between retries, continuing...');
+          }
         }
       }
     }
@@ -164,7 +184,10 @@ test.describe('NTDP Portal Login Tests - CI Friendly', () => {
       // Wait for response with reasonable timeout for CI
       try {
         await page.waitForLoadState('domcontentloaded', { timeout: 15000 }); // Reduced timeout
-        await page.waitForTimeout(10000); // Reduced wait time for CI
+        // Check if page is still valid before waiting
+        if (!page.isClosed()) {
+          await page.waitForTimeout(5000); // Reduced wait time for CI
+        }
       } catch (error) {
         console.log('⚠️ Waiting for response timed out - continuing with validation');
       }

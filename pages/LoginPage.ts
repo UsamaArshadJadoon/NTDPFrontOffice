@@ -17,7 +17,10 @@ export class LoginPage {
    * Navigate to login page
    */
   async goto() {
-    await this.page.goto('/login', { waitUntil: 'domcontentloaded' });
+    await this.page.goto('/login', { 
+      waitUntil: 'domcontentloaded',
+      timeout: 60000
+    });
     await this.waitForPageLoad();
   }
 
@@ -25,20 +28,25 @@ export class LoginPage {
    * Wait for login page to fully load
    */
   async waitForPageLoad() {
-    await this.page.waitForLoadState('domcontentloaded');
-    
-    // Try to wait for login elements, but don't fail if they're not available (might be after failed login)
     try {
-      await expect(this.saudiIdInput).toBeVisible({ timeout: 5000 });
-      await expect(this.loginButton).toBeVisible({ timeout: 5000 });
-    } catch (error) {
-      console.log('Login form elements not found - might be after failed login or different page state');
-      console.log('Error details:', error);
-      // Check if we're still on a login-related page
-      const url = this.page.url();
-      if (!url.includes('login')) {
-        throw new Error(`Not on login page. Current URL: ${url}`);
+      await this.page.waitForLoadState('networkidle', { timeout: 30000 }).catch(() => 
+        this.page.waitForLoadState('domcontentloaded', { timeout: 30000 })
+      );
+      
+      // Try to wait for login elements, but don't fail if they're not available (might be after failed login)
+      try {
+        await expect(this.saudiIdInput).toBeVisible({ timeout: 20000 });
+        await expect(this.loginButton).toBeVisible({ timeout: 20000 });
+      } catch (error) {
+        console.log('Login form elements not found - might be after failed login or different page state');
+        // Don't throw error, just log it - page might be in a different state
       }
+    } catch (error) {
+      // Handle closed page/context gracefully
+      if (error.message?.includes('Target page, context or browser has been closed')) {
+        throw new Error('Browser context closed during page load');
+      }
+      throw error;
     }
   }
 

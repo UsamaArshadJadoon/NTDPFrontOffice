@@ -3,22 +3,16 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-// Check if ZAP integration is enabled
-const USE_ZAP = process.env.USE_ZAP === 'true' || process.env.CI === 'true';
-const ZAP_PROXY = process.env.ZAP_PROXY || 'http://localhost:8080';
-
 export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 1 : 2,
-  timeout: 90000, // 90 seconds per test
+  workers: 1, // Run tests sequentially to avoid context issues
+  timeout: 90000, // 90 seconds
   expect: {
     timeout: 15000 // 15 seconds for assertions
   },
-  globalSetup: USE_ZAP ? './global-setup.ts' : undefined,
-  globalTeardown: USE_ZAP ? './global-teardown.ts' : undefined,
   reporter: process.env.CI ? [
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['list'],
@@ -34,14 +28,7 @@ export default defineConfig({
     video: 'retain-on-failure',
     actionTimeout: 30000, // Increased for CI
     navigationTimeout: 60000,
-    headless: true, // Ensure headless in CI
-    // Configure ZAP proxy if enabled
-    ...(USE_ZAP && {
-      proxy: {
-        server: ZAP_PROXY,
-      },
-      ignoreHTTPSErrors: true, // Required for ZAP proxy
-    }),
+    headless: true,
   },
 
   projects: [

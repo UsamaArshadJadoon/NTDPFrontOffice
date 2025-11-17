@@ -1,21 +1,19 @@
 ﻿# NTDP Front Office Automation
 
 [![CI Status](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/workflows/NTDP%20Portal%20Tests/badge.svg)](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/actions)
-[![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-green)](https://owasp.org/Top10/)
 [![Testing](https://img.shields.io/badge/Testing-Playwright-blue)](https://playwright.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 
-> **Comprehensive automated test suite for NTDP Portal using Playwright with TypeScript, featuring advanced security testing and OWASP Top 10 compliance validation.**
+> **Comprehensive automated test suite for NTDP Portal using Playwright with TypeScript**
 
 ## Features
 
-- **Complete Security Testing**- OWASP Top 10 vulnerability assessment
-- **Multi-Browser Support**- Chromium, Firefox, WebKit compatibility
-- **Page Object Model**- Maintainable and scalable test architecture
-- **Comprehensive Reporting**- HTML reports with screenshots and videos
-- **CI/CD Ready**- Optimized GitHub Actions workflows
-- **Network Resilience**- Retry logic and timeout handling
-- **Performance Monitoring**- Test execution metrics and analysis
+- ✅ **Multi-Browser Support** - Chromium, Firefox, WebKit compatibility
+- ✅ **Page Object Model** - Maintainable and scalable test architecture
+- ✅ **Comprehensive Reporting** - HTML reports with screenshots and videos
+- ✅ **CI/CD Ready** - Optimized GitHub Actions workflows
+- ✅ **Network Resilience** - Retry logic and timeout handling
+- ✅ **Performance Monitoring** - Test execution metrics and analysis
 
 ---
 
@@ -23,58 +21,19 @@
 
 ```text
 ntdp-frontoffice-automation/
-  .github/workflows/          # CI/CD pipeline configurations
-  pages/                      # Page Object Model classes
-    LoginPage.ts              # Login page interactions
-    DashboardPage.ts          # Dashboard page validation
-  tests/                     # Test specifications
-    ci-friendly.spec.ts       # CI-optimized functional tests
-    security-ci.spec.ts       # Fast security assessment
-    security.spec.ts          # Comprehensive OWASP testing
-    login-single.spec.ts      # Single login validation
-  utils/                     # Helper functions and utilities
-  testData/                  # Test data and credentials
-  docs/                      # Documentation and guides
-  test-results/              # Test execution artifacts
-  playwright-report/         # HTML test reports
-  playwright.config.ts       # Playwright configuration
+├── .github/workflows/          # CI/CD pipeline configurations
+├── pages/                      # Page Object Model classes
+│   ├── LoginPage.ts            # Login page interactions
+│   └── DashboardPage.ts        # Dashboard page validation
+├── tests/                      # Test specifications
+│   ├── ci-friendly.spec.ts     # CI-optimized functional tests
+│   └── login-single.spec.ts    # Single login validation
+├── utils/                      # Helper functions and utilities
+├── testData/                   # Test data and credentials
+├── test-results/               # Test execution artifacts
+├── playwright-report/          # HTML test reports
+└── playwright.config.ts        # Playwright configuration
 ```
-
----
-
-## Test Categories
-
-### 1.  Security Testing Suite
-
-#### Comprehensive OWASP Top 10 Coverage
-
-| Test Category | Tests | Coverage |
-|---------------|-------|----------|
-| **Pre-login Security**| 6 tests | Authentication, Headers, HTTPS |
-| **Post-login Security**| 6 tests | Session, Authorization, Data |
-| **OWASP Top 10**| 10 tests | Complete vulnerability assessment |
-| **Injection Testing**| 3 tests | SQL injection, XSS, Command injection |
-| **Security Headers**| 5 tests | CSP, HSTS, X-Frame-Options, etc. |
-
-### 2.  CI-Friendly Tests
-
-#### Optimized for fast CI/CD execution
-
-- Multi-browser compatibility testing
-- Network resilience validation
-- Timeout and retry logic
-- Login flow verification
-- Element interaction testing
-
-### 3.  Functional Tests
-
-#### Core application functionality
-
-- User authentication flows
-- Dashboard navigation
-- Form validation
-- Error handling
-- Success scenarios
 
 ---
 
@@ -82,8 +41,8 @@ ntdp-frontoffice-automation/
 
 ### Prerequisites
 
-- **Node.js**18+
-- **npm**or **yarn**
+- **Node.js** 18+
+- **npm** or **yarn**
 - **Git**
 
 ### Installation
@@ -98,316 +57,262 @@ npm install
 
 # 3. Install Playwright browsers
 npx playwright install --with-deps
-
-# 4. Setup environment
-cp .env.example .env
-# Edit .env with your configuration
 ```
 
-### Environment Configuration
+### Environment Setup
+
+Create a `.env` file in the root directory:
 
 ```env
-# Application Configuration
+# Application Under Test
 BASE_URL=https://portal-uat.ntdp-sa.com
-SAUDI_ID=1111111111
-EXPECTED_NAME=Dummy
 
-# Security Testing (Optional)
-ZAP_BASE_URL=http://localhost:8080
-ZAP_API_KEY=your-zap-api-key
+# Test Credentials (Do NOT commit real credentials)
+SAUDI_ID=your-saudi-id
+PASSWORD=your-password
 ```
 
 ---
 
-## Usage
+## Running Tests
 
-### Essential Commands
+### Basic Commands
 
 ```bash
-# Quick test run (Chromium only)
+# Run all tests
 npm test
 
-# All browsers
+# Run tests in all browsers
 npm run test:all
 
-# Visual mode (headed)
+# Run in headed mode (see browser)
 npm run test:headed
 
-# Debug mode
+# Run in debug mode
 npm run test:debug
 
-# Interactive UI
+# Interactive UI mode
 npm run test:ui
 
-# Generate reports
+# View test report
 npm run test:report
 ```
 
-### Specialized Testing
+### CI/CD Commands
 
 ```bash
-# Security Testing
-npm run test:security                    # Full security suite
-npm run test:security:basic             # Basic security scan
-npm run test:security:owasp             # OWASP Top 10 tests
-npm run test:security:vulnerabilities   # Vulnerability testing
+# Run tests with CI reporters
+npm run test:ci
 
-# CI-Optimized
-npm run test:ci                         # CI with reports
-npm run test:ci:chromium               # Chromium only
-npm run test:ci:firefox                # Firefox only
-npm run test:ci:webkit                 # WebKit only
-```
-
-### Development Commands
-
-```bash
-# Code quality
-npm run lint                            # ESLint check
-npm run type-check                      # TypeScript validation
-
-# Installation
-npm run install:ci                      # CI environment setup
+# Run specific browser in CI
+npm run test:ci:chromium
+npm run test:ci:firefox
+npm run test:ci:webkit
 ```
 
 ---
 
-## Security Testing
+## Test Architecture
 
-### OWASP Top 10 2021 Coverage
+### Page Object Model
 
-| OWASP Category | Status | Tests | Risk Level |
-|----------------|--------|-------|------------|
-| **A01**- Broken Access Control |  Covered | 4 tests | Medium |
-| **A02**- Cryptographic Failures |  Covered | 3 tests | Medium |
-| **A03**- Injection |  Covered | 5 tests | Low |
-| **A04**- Insecure Design |  Covered | 2 tests | Low |
-| **A05**- Security Misconfiguration |  Covered | 6 tests | Medium |
-| **A06**- Vulnerable Components |  Covered | 2 tests | Low |
-| **A07**- Authentication Failures |  Covered | 4 tests | Low |
-| **A08**- Data Integrity Failures |  Covered | 2 tests | Low |
-| **A09**- Logging Failures |  Covered | 2 tests | Low |
-| **A10**- Server-Side Request Forgery |  Covered | 2 tests | Low |
+The framework uses the **Page Object Model (POM)** pattern for maintainability:
 
-### Security Test Features
-
-- **Automated Vulnerability Scanning**
-- **OWASP ZAP Integration** - Comprehensive security scanning
-- **Cookie Security Analysis**
-- **HTTPS Protocol Validation**
-- **Security Header Verification**
-- **Injection Attack Testing**
-- **Screenshot Evidence Collection**
-- **Detailed Security Reports** (HTML, JSON, Markdown)
-
----
-
-## OWASP ZAP Integration
-
-This framework includes **comprehensive OWASP ZAP (Zed Attack Proxy)** integration for automated security testing.
-
-### 🚀 New: Proxy-Based Integration
-
-All Playwright tests can run through the ZAP proxy, enabling **automatic passive security scanning** during normal test execution:
-
-```bash
-# Start ZAP daemon
-.\start-zap.ps1
-
-# Run tests through ZAP proxy
-npm run test:zap              # All tests with ZAP scanning
-npm run test:zap:chromium     # Chromium only with ZAP
+```typescript
+// pages/LoginPage.ts
+export class LoginPage {
+  constructor(private page: Page) {}
+  
+  async goto() {
+    await this.page.goto('/login');
+  }
+  
+  async login(saudiId: string, password: string) {
+    await this.enterSaudiId(saudiId);
+    await this.enterPassword(password);
+    await this.clickLogin();
+  }
+}
 ```
 
-### How It Works
+### Test Structure
 
-1. **ZAP starts in daemon mode** before tests
-2. **All browser traffic** routes through ZAP proxy (localhost:8080)
-3. **ZAP passively scans** for security vulnerabilities
-4. **Reports auto-generate** after tests complete (HTML, JSON, Markdown)
-5. **GitHub Actions** automatically uploads reports as artifacts
+```typescript
+// tests/example.spec.ts
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
 
-### ZAP Features
-
-- **Automatic Passive Scanning** - No code changes, no test modifications
-- **Multiple Report Formats** - HTML, JSON, Markdown
-- **CI/CD Integration** - Docker support for GitHub Actions
-- **Zero Impact** - Passive scanning doesn't affect application
-- **Comprehensive Coverage** - OWASP Top 10 vulnerability detection
-
-For detailed setup and usage, see:
-- **Quick Start**: [docs/ZAP-PROXY-INTEGRATION.md](docs/ZAP-PROXY-INTEGRATION.md)
-- **Complete Guide**: [docs/ZAP-INTEGRATION.md](docs/ZAP-INTEGRATION.md)
+test('should login successfully', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.login('123456789', 'password');
+  await expect(page).toHaveURL(/dashboard/);
+});
+```
 
 ---
 
 ## CI/CD Integration
 
-### GitHub Actions Workflows
+### GitHub Actions
 
-| Workflow | Trigger | Purpose | Duration |
-|----------|---------|---------|----------|
-| **simple.yml**| Push/PR  main | Essential tests + basic security | ~2-3 min |
-| **security-testing.yml**| Manual | Comprehensive OWASP testing | ~15-20 min |
-| **ZAP Security Scan** | Schedule/Manual | OWASP ZAP automated scanning | ~10-15 min |
+The project includes optimized GitHub Actions workflows:
 
-### Supported Environments
+- **Parallel execution** across multiple browsers
+- **Artifact retention** for failed tests
+- **HTML report generation** and upload
+- **Environment-based configuration**
 
-- **Ubuntu Latest**(Primary CI environment)
-- **Windows**(Local development)
-- **macOS**(Cross-platform testing)
+### Workflow Files
 
-### Browser Matrix
-
-- **Chromium**(Primary)
-- **Firefox**
-- **WebKit**(Safari engine)
+- `.github/workflows/playwright.yml` - Main test execution
+- Automatic retries for flaky tests
+- Screenshot and video capture on failure
 
 ---
 
-## Reporting & Analytics
+## Configuration
 
-### Test Reports
+### Playwright Config
 
-#### HTML Reports
+Key configuration options in `playwright.config.ts`:
 
-- **Interactive test results**with filtering
-- **Screenshots**for failed tests
-- **Video recordings**of test execution
-- **Performance metrics**and timing
-- **Error traces**with stack information
-
-#### Security Reports
-
-- **OWASP Top 10 assessment**with risk ratings
-- **Vulnerability findings**with remediation steps
-- **Security header analysis**
-- **Cookie security evaluation**
-- **Compliance status**reporting
-
-#### CI Reports
-
-- **JUnit XML**for CI integration
-- **Test result summaries**
-- **Artifact collection**
-- **Failure analysis**
-
-### Generated Artifacts
-
-```text
-test-results/
-  security/               # Security assessment reports
-    security-scan-*.md    # Detailed findings
-    *.png                 # Security screenshots
-  screenshots/           # Failure screenshots
-  videos/               # Test execution videos
-  traces/               # Debug traces
+```typescript
+export default defineConfig({
+  testDir: './tests',
+  timeout: 90000,                    // 90 seconds per test
+  retries: process.env.CI ? 1 : 0,  // Retry once in CI
+  workers: process.env.CI ? 1 : 2,  // Parallel workers
+  use: {
+    baseURL: process.env.BASE_URL,
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+  },
+});
 ```
 
 ---
 
-## Architecture
+## Test Reports
 
-### Page Object Model Implementation
+### HTML Reports
+
+After running tests, view the interactive HTML report:
+
+```bash
+npm run test:report
+```
+
+The report includes:
+
+- ✅ Test execution timeline
+- 📸 Screenshots on failure
+- 🎥 Video recordings
+- 📊 Test statistics
+- 🔍 Detailed error traces
+
+### CI Reports
+
+In CI/CD, reports are generated in multiple formats:
+
+- **HTML** - Interactive web report
+- **JUnit** - For CI/CD integration
+- **JSON** - For custom processing
+
+---
+
+## Best Practices
+
+### 1. Test Independence
+
+Each test should be independent and able to run in any order:
 
 ```typescript
-// LoginPage.ts - Clean, maintainable page interactions
-export class LoginPage {
-  private page: Page;
-  
-  // Locators
-  private saudiIdInput = 'input[name="saudiId"]';
-  private loginButton = 'button[type="submit"]';
-  
-  // Actions
-  async goto(): Promise<void>
-  async enterSaudiId(saudiId: string): Promise<void>
-  async clickLogin(): Promise<void>
-  async waitForPageLoad(): Promise<void>
-  async hasLoginError(): Promise<boolean>
+test.beforeEach(async ({ page }) => {
+  // Fresh state for each test
+  await page.goto('/');
+});
+```
+
+### 2. Robust Selectors
+
+Use stable, semantic selectors:
+
+```typescript
+// ✅ Good - Semantic selectors
+await page.getByRole('button', { name: 'Login' }).click();
+await page.getByLabel('Saudi ID').fill('123456789');
+
+// ❌ Avoid - Brittle selectors
+await page.click('#btn-123');
+await page.fill('.form-input-0');
+```
+
+### 3. Explicit Waits
+
+Wait for specific conditions:
+
+```typescript
+// Wait for element to be visible
+await expect(page.getByText('Welcome')).toBeVisible();
+
+// Wait for navigation
+await page.waitForURL('**/dashboard');
+
+// Wait for network idle
+await page.waitForLoadState('networkidle');
+```
+
+### 4. Error Handling
+
+Implement retry logic for flaky operations:
+
+```typescript
+for (let attempt = 1; attempt <= 3; attempt++) {
+  try {
+    await page.goto('/login');
+    break;
+  } catch (error) {
+    if (attempt === 3) throw error;
+    await page.waitForTimeout(2000);
+  }
 }
 ```
-
-### Test Data Management
-
-```typescript
-// Centralized test data
-export const testData = {
-  validCredentials: {
-    saudiId: process.env.SAUDI_ID || '1111111111',
-    expectedName: process.env.EXPECTED_NAME || 'Dummy'
-  },
-  
-  securityPayloads: {
-    sqlInjection: ["1' OR '1'='1", "'; DROP TABLE users;--"],
-    xss: ["<script>alert('XSS')</script>", "javascript:alert(1)"]
-  }
-};
-```
-
----
-
-## Performance Metrics
-
-### Current Test Statistics
-
-| Metric | Value | Target |
-|--------|-------|--------|
-| **Total Tests**| 30 | - |
-| **Success Rate**| 100% | >95% |
-| **Execution Time**| ~5 min | <10 min |
-| **Coverage**| OWASP Top 10 | 100% |
-| **Browsers**| 3 | 3 |
-| **Security Issues**| 6 (Medium) | 0 (High) |
-
-### Performance Optimization
-
-- **Parallel Execution**- Multiple tests run simultaneously
-- **Smart Retries**- Automatic retry on network failures
-- **Artifact Optimization**- Efficient screenshot/video capture
-- **CI Caching**- Dependency and browser caching
 
 ---
 
 ## Troubleshooting
 
-### Common Issues & Solutions
+### Common Issues
 
-#### Network Timeouts
+#### Tests Fail in Headless Mode
 
 ```bash
-# Issue: Tests failing due to network timeouts
-# Solution: Increase timeout values
-npx playwright test --timeout=120000
+# Run in headed mode to debug
+npm run test:headed
 ```
 
-#### Element Not Found
+#### Network Timeout Errors
 
-```bash
-# Issue: Selectors not working after UI changes
-# Solution: Update page object selectors
-# Check browser developer tools for current selectors
+Increase timeout in `playwright.config.ts`:
+
+```typescript
+use: {
+  navigationTimeout: 60000,  // 60 seconds
+  actionTimeout: 30000,      // 30 seconds
+}
 ```
 
-#### Security Test Failures
+#### Screenshots Not Captured
 
-```bash
-# Issue: Security tests reporting false positives
-# Solution: Review security configuration
-# Check server security headers and HTTPS setup
-```
+Ensure configuration has:
 
-### Debug Tools
-
-```bash
-# Debug specific test
-npx playwright test tests/login-single.spec.ts --debug
-
-# Record test execution
-npx playwright test --headed --video=on
-
-# Generate trace
-npx playwright test --trace=on
+```typescript
+use: {
+  screenshot: 'only-on-failure',
+  video: 'retain-on-failure',
+}
 ```
 
 ---
@@ -416,106 +321,47 @@ npx playwright test --trace=on
 
 ### Development Workflow
 
-1. **Fork** the repository
-2. **Create** feature branch (`git checkout -b feature/amazing-feature`)
-3. **Write** tests following existing patterns
-4. **Run** full test suite (`npm run test:all`)
-5. **Update** documentation
-6. **Submit** pull request
+1. Create a feature branch
+2. Write tests following existing patterns
+3. Run tests locally: `npm test`
+4. Commit with clear messages
+5. Open a pull request
 
-### Code Standards
-
-- **TypeScript**for type safety
-- **ESLint**configuration compliance
-- **Page Object Model**pattern
-- **Comprehensive test coverage**
-- **Security-first approach**
-
-### Commit Convention
+### Code Quality
 
 ```bash
-feat: add new security test for XSS validation
-fix: resolve timeout issue in CI environment
-docs: update README with new test commands
-test: add comprehensive OWASP A01 coverage
+# Run linter
+npm run lint
+
+# Type checking
+npm run type-check
 ```
 
 ---
 
-## Current Security Assessment
+## Resources
 
-### Security Status
-
-| Risk Level | Count | Status |
-|------------|-------|---------|
-|  **High**| 0 |  Clean |
-|  **Medium**| 6 |  Review Required |
-|  **Low**| 0 |  Clean |
-
-### Remediation Recommendations
-
-1. **Security Headers**
-   - Implement `X-Frame-Options: DENY`
-   - Add `Content-Security-Policy`
-   - Configure `Strict-Transport-Security`
-
-2. **Cookie Security**
-   - Add `Secure` flag for HTTPS cookies
-   - Implement `HttpOnly` for session cookies
-   - Configure proper `SameSite` attributes
-
-3. **Access Control**
-   - Review unauthorized access paths
-   - Implement proper authentication checks
-   - Add authorization middleware
-
----
-
-## Documentation
-
-### Additional Resources
-
-- [**Playwright Documentation**](https://playwright.dev/) - Official Playwright docs
-- [**OWASP Top 10**](https://owasp.org/Top10/) - Security vulnerability guide
-- [**TypeScript Handbook**](https://www.typescriptlang.org/docs/) - TypeScript reference
-
-### Project Documentation
-
-- [**Test Execution Report**](./TEST-EXECUTION-REPORT.md) - Detailed test results
-- [**Security Assessment**](./docs/security-assessment.md) - Security findings
-- [**CI/CD Guide**](./docs/ci-cd-setup.md) - Pipeline configuration
-- [**Troubleshooting Guide**](./docs/troubleshooting.md) - Common issues
+- [Playwright Documentation](https://playwright.dev/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Page Object Model](https://playwright.dev/docs/pom)
+- [Best Practices](https://playwright.dev/docs/best-practices)
 
 ---
 
 ## License
 
-This project is licensed under the **ISC License**- see the [LICENSE](LICENSE) file for details.
+ISC License
 
 ---
 
 ## Support
 
-### Getting Help
+For issues or questions:
 
-1. **Documentation** - Check existing docs and guides
-2. **Issues** - Search existing GitHub issues
-3. **Discussions** - Community support and questions
-4. **Bug Reports** - Create detailed issue with reproduction steps
-
-### Contact
-
-- **Repository**: [UsamaArshadJadoon/NTDPFrontOffice](https://github.com/UsamaArshadJadoon/NTDPFrontOffice)
-- **Issues**: [GitHub Issues](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/issues)
+- Open a [GitHub Issue](https://github.com/UsamaArshadJadoon/NTDPFrontOffice/issues)
+- Check existing documentation
+- Review Playwright's official guides
 
 ---
 
-**Star this repository if it helped you!**
-
-![Test Status](https://img.shields.io/badge/Tests-30%20Passing-brightgreen)
-![Security](https://img.shields.io/badge/Security-OWASP%20Compliant-green)
-![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
-
----
-
-**Last Updated**: November 2025 | **Framework**: Playwright + TypeScript | **Security**: OWASP Top 10 2021
+### Built with ❤️ using Playwright and TypeScript
