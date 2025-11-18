@@ -16,17 +16,14 @@ test.describe('NTDP Portal Login - Single Valid Test', () => {
     // Step 2: Enter valid Saudi ID from environment
     await loginPage.enterSaudiId(validCredentials.saudiId);
     
-    // Step 3: Verify login button is enabled
-    await expect(loginPage.loginButton).toBeEnabled();
-
-    // Step 4: Click login button
+    // Step 3: Click login button (button enable check is inside clickLogin)
     await loginPage.clickLogin();
 
-    // Step 5: Wait for login response and dashboard loading (30 seconds for full load)
+    // Step 4: Wait for login response and dashboard loading (30 seconds for full load)
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(30000);
 
-    // Step 6: Check for login errors
+    // Step 5: Check for login errors
     const errorMessage = await loginPage.hasLoginError();
     const hasLoginFailedText = await page.getByText('Login failed').isVisible().catch(() => false);
     
@@ -37,16 +34,16 @@ test.describe('NTDP Portal Login - Single Valid Test', () => {
       return; // Exit early, test completed successfully
     }
 
-    // Step 7: Verify successful login indicators
+    // Step 6: Verify successful login indicators
     const currentUrl = page.url();
-    const loginFormHidden = await loginPage.saudiIdInput.isHidden().catch(() => false);
-    const loginFormVisible = await loginPage.saudiIdInput.isVisible().catch(() => true);
+    const loginFormHidden = await page.locator('input[type="text"]').first().isHidden().catch(() => false);
+    const loginFormVisible = await page.locator('input[type="text"]').first().isVisible().catch(() => true);
     const urlChanged = !currentUrl.endsWith('/login');
     const urlContainsHome = currentUrl.includes('/home');
     const hasVerificationCode = await page.getByText('Verification code').isVisible().catch(() => false);
     const hasNafathRequest = await page.getByText('Nafath').isVisible().catch(() => false);
 
-    // Step 8: Assert successful login (multiple success conditions)
+    // Step 7: Assert successful login (multiple success conditions)
     const loginSuccessful = loginFormHidden || !loginFormVisible || urlChanged || urlContainsHome || hasVerificationCode || hasNafathRequest;
     
     if (!loginSuccessful) {
@@ -55,7 +52,7 @@ test.describe('NTDP Portal Login - Single Valid Test', () => {
     
     expect(loginSuccessful).toBe(true);
 
-    // Step 9: If redirected to dashboard, verify dashboard elements
+    // Step 8: If redirected to dashboard, verify dashboard elements
     if (urlChanged && !page.url().includes('login')) {
       // Wait for dashboard to load
       await dashboardPage.waitForPageLoad();
@@ -72,11 +69,11 @@ test.describe('NTDP Portal Login - Single Valid Test', () => {
       
       // Optionally verify login form is hidden or disabled
       if (loginFormHidden) {
-        await expect(loginPage.saudiIdInput).not.toBeVisible();
+        await expect(page.locator('input[type="text"]').first()).not.toBeVisible();
       }
     }
 
-    // Step 10: Take screenshot for verification
+    // Step 9: Take screenshot for verification
     await page.screenshot({ path: 'login-success-verification.png', fullPage: true });
   });
 });

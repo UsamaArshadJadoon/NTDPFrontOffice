@@ -1,16 +1,38 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { createSelfHealing } from '../utils/SelfHealingLocator';
 
 export class LoginPage {
   readonly page: Page;
-  readonly saudiIdInput: Locator;
-  readonly loginButton: Locator;
-  readonly pageTitle: Locator;
+  private selfHealing: ReturnType<typeof createSelfHealing>;
 
   constructor(page: Page) {
     this.page = page;
-    this.saudiIdInput = page.locator('input[type="text"], input[name*="id"], input[id*="id"], input').first();
-    this.loginButton = page.getByRole('button', { name: 'Login login' });
-    this.pageTitle = page.locator('h1, h2, .page-title');
+    this.selfHealing = createSelfHealing(page);
+  }
+
+  /**
+   * Get Saudi ID input with self-healing
+   */
+  private async getSaudiIdInput(): Promise<Locator> {
+    return this.selfHealing.findInput({
+      type: 'text',
+      name: 'id',
+      placeholder: 'Saudi ID',
+      label: 'Saudi ID',
+      identifier: 'SaudiIdInput'
+    });
+  }
+
+  /**
+   * Get Login button with self-healing
+   */
+  private async getLoginButton(): Promise<Locator> {
+    return this.selfHealing.findButton({
+      text: /Login/i,
+      type: 'submit',
+      testId: 'login-button',
+      identifier: 'LoginButton'
+    });
   }
 
   /**
@@ -33,17 +55,16 @@ export class LoginPage {
         this.page.waitForLoadState('domcontentloaded', { timeout: 30000 })
       );
       
-      // Try to wait for login elements, but don't fail if they're not available (might be after failed login)
+      // Try to wait for login elements using self-healing
       try {
-        await expect(this.saudiIdInput).toBeVisible({ timeout: 20000 });
-        await expect(this.loginButton).toBeVisible({ timeout: 20000 });
+        await this.getSaudiIdInput();
+        await this.getLoginButton();
       } catch (error) {
         console.log('Login form elements not found - might be after failed login or different page state');
-        // Don't throw error, just log it - page might be in a different state
       }
     } catch (error) {
-      // Handle closed page/context gracefully
-      if (error.message?.includes('Target page, context or browser has been closed')) {
+      const err = error as Error;
+      if (err.message?.includes('Target page, context or browser has been closed')) {
         throw new Error('Browser context closed during page load');
       }
       throw error;
@@ -55,12 +76,12 @@ export class LoginPage {
    * @param saudiId - The Saudi ID number to enter
    */
   async enterSaudiId(saudiId: string) {
-    await this.saudiIdInput.waitFor({ state: 'visible', timeout: 10000 });
-    await this.saudiIdInput.click();
-    await this.saudiIdInput.fill(saudiId);
+    const input = await this.getSaudiIdInput();
+    await input.click();
+    await input.fill(saudiId);
     
     // Verify the value was entered correctly
-    await expect(this.saudiIdInput).toHaveValue(saudiId);
+    await expect(input).toHaveValue(saudiId);
   }
 
   /**
@@ -68,11 +89,11 @@ export class LoginPage {
    * @param saudiId - The Saudi ID to type
    */
   async clearAndTypeId(saudiId: string) {
-    await this.saudiIdInput.waitFor({ state: 'visible', timeout: 10000 });
-    await this.saudiIdInput.click();
-    await this.saudiIdInput.clear();
+    const input = await this.getSaudiIdInput();
+    await input.click();
+    await input.clear();
     for (const ch of saudiId.split('')) {
-      await this.saudiIdInput.type(ch);
+      await input.type(ch);
     }
   }
 
@@ -80,9 +101,9 @@ export class LoginPage {
    * Click the login button
    */
   async clickLogin() {
-    await this.loginButton.waitFor({ state: 'visible', timeout: 10000 });
-    await expect(this.loginButton).toBeEnabled();
-    await this.loginButton.click();
+    const button = await this.getLoginButton();
+    await expect(button).toBeEnabled();
+    await button.click();
   }
 
   /**
@@ -131,8 +152,10 @@ export class LoginPage {
    * Note: Login button is disabled until valid Saudi ID is entered
    */
   async verifyLoginPageElements() {
-    await expect(this.saudiIdInput).toBeVisible();
-    await expect(this.loginButton).toBeVisible();
+    const input = await this.getSaudiIdInput();
+    const button = await this.getLoginButton();
+    await expect(input).toBeVisible();
+    await expect(button).toBeVisible();
     // Button is disabled initially until ID is entered
   }
 }

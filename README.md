@@ -9,6 +9,7 @@
 ## Features
 
 - ✅ **Multi-Browser Support** - Chromium, Firefox, WebKit compatibility
+- ✅ **Self-Healing Locators** - Automatic element discovery with fallback strategies
 - ✅ **Page Object Model** - Maintainable and scalable test architecture
 - ✅ **Comprehensive Reporting** - HTML reports with screenshots and videos
 - ✅ **CI/CD Ready** - Optimized GitHub Actions workflows
@@ -29,6 +30,7 @@ ntdp-frontoffice-automation/
 │   ├── ci-friendly.spec.ts     # CI-optimized functional tests
 │   └── login-single.spec.ts    # Single login validation
 ├── utils/                      # Helper functions and utilities
+│   └── SelfHealingLocator.ts   # Self-healing locator utilities
 ├── testData/                   # Test data and credentials
 ├── test-results/               # Test execution artifacts
 ├── playwright-report/          # HTML test reports
@@ -345,6 +347,8 @@ npm run type-check
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Page Object Model](https://playwright.dev/docs/pom)
 - [Best Practices](https://playwright.dev/docs/best-practices)
+- [Self-Healing Test Guide](./docs/SELF-HEALING.md)
+- [GitHub Actions Setup](./docs/GITHUB-ACTIONS.md)
 
 ---
 
