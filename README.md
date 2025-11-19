@@ -1,5 +1,8 @@
 # NTDP Front Office Automation - Clean & Fast
 
+[![Playwright Tests](https://github.com/AzmDevelopment/NTDPFrontOffice/actions/workflows/playwright-ci.yml/badge.svg)](https://github.com/AzmDevelopment/NTDPFrontOffice/actions/workflows/playwright-ci.yml)
+[![Deploy](https://github.com/AzmDevelopment/NTDPFrontOffice/actions/workflows/deploy.yml/badge.svg)](https://github.com/AzmDevelopment/NTDPFrontOffice/actions/workflows/deploy.yml)
+
 ## Overview
 
 Ultra-fast Playwright automation for NTDP Portal with enhanced self-healing locators.
@@ -58,6 +61,14 @@ npm install
 npx playwright install
 npx playwright test --config=playwright-fast-stable.config.ts
 ```
+
+## CI/CD Pipeline
+
+- **Automated Testing**: Runs on every push and pull request
+- **Multi-Node Testing**: Tests against Node.js 18 and 20
+- **Daily Health Checks**: Scheduled runs at 6 AM UTC
+- **Security Audits**: Automated dependency vulnerability scanning
+- **Markdown Linting**: Ensures documentation quality
 
 ## Status
 
