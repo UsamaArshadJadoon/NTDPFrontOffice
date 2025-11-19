@@ -80,6 +80,7 @@ jobs:
 
       - name: Lint markdown files
         run: |
+          npm install markdownlint-cli
           npx markdownlint-cli README.md || echo "⚠️ Markdown lint warnings found but continuing"
 
   security:

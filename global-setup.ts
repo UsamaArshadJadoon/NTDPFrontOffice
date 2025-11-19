@@ -17,7 +17,8 @@ async function globalSetup(config: FullConfig) {
     
     await browser.close();
   } catch (error) {
-    console.log('⚠️ Network connectivity issues detected:', error.message);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.log('⚠️ Network connectivity issues detected:', errorMessage);
     console.log('🔄 Tests will run with increased resilience...');
   }
   
