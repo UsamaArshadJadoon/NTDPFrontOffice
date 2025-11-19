@@ -20,5 +20,13 @@
     "sonarlint.output.showAnalyzerLogs": false,
     "sonarlint.output.showVerboseLogs": false,
     "sonarlint.trace.server": "off",
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+    "yaml.validate": false,
+    "yaml.schemaStore.enable": false,
+    "yaml.customTags": [],
+    "files.eol": "\n",
+    "files.associations": {
+        "*.yml": "yaml",
+        "*.yaml": "yaml"
+    }
 }

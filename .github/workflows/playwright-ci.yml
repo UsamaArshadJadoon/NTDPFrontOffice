@@ -1,20 +1,23 @@
-name: Playwright Tests CI
-
+name: "Playwright Tests CI"
 on:
   push:
-    branches: [main, develop]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [main]
+    branches:
+      - main
   schedule:
     - cron: "0 6 * * *"
-
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20]
+        node-version:
+          - 18
+          - 20
       fail-fast: false
     steps:
       - name: Checkout repository
