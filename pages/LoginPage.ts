@@ -70,7 +70,7 @@ export class LoginPage {
    */
   async goto() {
     const maxRetries = 3;
-    let lastError;
+    // Removed unused lastError variable
     
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
@@ -83,7 +83,6 @@ export class LoginPage {
         console.log('✅ Navigation successful');
         return;
       } catch (error) {
-        lastError = error;
         console.log(`⚠️ Navigation attempt ${attempt} failed:`, error instanceof Error ? error.message : String(error));
         
         if (attempt < maxRetries) {

@@ -183,7 +183,8 @@ export class EnhancedSelfHealingLocator {
    * Get strategies sorted by success rate and recency
    */
   private getSortedStrategies(identifier: string, strategies: any[]): any[] {
-    const history = this.strategyHistory.get(identifier) || [];
+    // Get strategy history for intelligent ordering
+    // const history = this.strategyHistory.get(identifier) || [];
     
     return strategies.map(strategy => ({
       ...strategy,
@@ -236,7 +237,7 @@ export class EnhancedSelfHealingLocator {
   /**
    * Visual similarity matching (basic implementation)
    */
-  async findByVisualSimilarity(identifier: string, referenceScreenshot?: Buffer): Promise<Locator | null> {
+  async findByVisualSimilarity(identifier: string, _referenceScreenshot?: Buffer): Promise<Locator | null> {
     if (!this.aiLearningEnabled) return null;
 
     const fingerprint = this.elementFingerprints.get(identifier);

@@ -13,6 +13,6 @@
     "rootDir": "./",
     "types": ["node", "@playwright/test"]
   },
-  "include": ["tests/**/*", "*.ts"],
+  "include": ["**/*.ts", "tests/**/*", "pages/**/*", "utils/**/*", "testData/**/*"],
   "exclude": ["node_modules"]
 }

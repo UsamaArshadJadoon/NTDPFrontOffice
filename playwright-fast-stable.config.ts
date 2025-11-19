@@ -1,5 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import path from 'path';
 
 /**
  * Fast and Stable Playwright Configuration
@@ -16,9 +15,9 @@ export default defineConfig({
 
   // Fast execution settings
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 2 : 4, // More workers for speed
+  forbidOnly: !!(globalThis as any).process?.env?.CI,
+  retries: (globalThis as any).process?.env?.CI ? 1 : 0,
+  workers: (globalThis as any).process?.env?.CI ? 2 : 4, // More workers for speed
   
   // Fast reporter
   reporter: [

@@ -229,7 +229,7 @@ export class SelfHealingLocator {
     throw new Error(`❌ Could not find button ${options.identifier}`);
   }
 
-  private logSuccess(identifier: string, selector: string): void {
+  private logSuccess(_identifier: string, _selector: string): void {
     // Optionally log successful locators for analysis
   }
 
