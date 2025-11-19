@@ -1,3 +1,0 @@
-# Disable YAML validation for all workflow files
-*.yml
-*.yaml
